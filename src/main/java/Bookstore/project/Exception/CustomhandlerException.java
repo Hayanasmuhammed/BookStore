@@ -1,7 +1,5 @@
 package Bookstore.project.Exception;
 
-
-
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,27 +24,23 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class CustomhandlerException extends ResponseEntityExceptionHandler {
 
-    // error handle for @Valid
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                  HttpHeaders headers,
-                                                                  HttpStatus status, WebRequest request) {
+	// error handle for @Valid
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", new Date());
-        body.put("status", status.value());
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", new Date());
+		body.put("status", status.value());
 
-        //Get all errors
-        List<String> errors = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(x -> x.getDefaultMessage())
-                .collect(Collectors.toList());
+		// Get all errors
+		List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage())
+				.collect(Collectors.toList());
 
-        body.put("errors", errors);
+		body.put("errors", errors);
 
-        return new ResponseEntity<>(body, headers, status);
+		return new ResponseEntity<>(body, headers, status);
 
-    }
+	}
 
 	@Override
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
@@ -73,21 +67,18 @@ public class CustomhandlerException extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		System.out.println("gvdhg");
-//		return super.handleMethodArgumentNotValid(ex, headers, status, request);
-		 Map<String, Object> body = new LinkedHashMap<>();
-	        body.put("timestamp", new Date());
-	        body.put("status", status.value());
+//		return super.handleMethodArgumentNotValid( headers, status, request);
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", new Date());
+		body.put("status", status.value());
 
-	        //Get all errors
-	        List<String> errors = ex.getBindingResult()
-	                .getFieldErrors()
-	                .stream()
-	                .map(x -> x.getDefaultMessage())
-	                .collect(Collectors.toList());
+		// Get all errors
+		List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage())
+				.collect(Collectors.toList());
 
-	        body.put("errors", errors);
+		body.put("errors", errors);
 
-	        return new ResponseEntity<>(body, headers, status);
+		return new ResponseEntity<>(body, headers, status);
 	}
 
 	@Override
